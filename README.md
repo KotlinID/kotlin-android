@@ -1,2 +1,2 @@
 # Kotlin Android
-Simple Android Application using Kotlin as a Language to Consume The REST API from "http://ibacor.com/api#bcr-twitter-stream"
+Simple Android Application using Kotlin as a Language to Consume The REST API from iBacor
