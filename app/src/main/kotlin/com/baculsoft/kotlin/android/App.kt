@@ -5,9 +5,9 @@ import android.content.Context
 import android.support.multidex.MultiDex
 
 /**
- * @author Budi Oktaviyan Suryanto (budi@setipe.com)
+ * @author Budi Oktaviyan Suryanto (budi@baculsoft.com)
  */
-open class App : Application() {
+class App : Application() {
 
     override fun onCreate() {
         super.onCreate()

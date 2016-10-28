@@ -6,9 +6,9 @@ import com.baculsoft.kotlin.android.R
 import kotlinx.android.synthetic.main.activity_main.*
 
 /**
- * @author Budi Oktaviyan Suryanto (budi@setipe.com)
+ * @author Budi Oktaviyan Suryanto (budi@baculsoft.com)
  */
-open class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
