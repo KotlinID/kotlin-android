@@ -49,6 +49,4 @@ dependencies {
     compile("com.squareup.okhttp3:logging-interceptor:${okHttpVersion}")
     compile("org.parceler:parceler-api:${parcelerVersion}")
     apt("org.parceler:parceler:${parcelerVersion}")
-    compile("org.greenrobot:eventbus:${eventBusVersion}")
-    compile("com.github.bumptech.glide:glide:${glideVersion}")
 }

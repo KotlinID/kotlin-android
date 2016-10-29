@@ -8,8 +8,6 @@ buildscript {
         retrofitVersion = '2.1.0'
         okHttpVersion = '3.4.1'
         parcelerVersion = '1.1.6'
-        eventBusVersion = '3.0.0'
-        glideVersion = '3.7.0'
     }
     repositories {
         mavenCentral()

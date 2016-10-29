@@ -1,5 +1,6 @@
 package com.baculsoft.kotlin.android.utils
 
+import java.text.DateFormat
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -20,17 +21,17 @@ class Dates {
             return INSTANCE as Dates
         }
 
-        private val yyyyMMdd = SimpleDateFormat(IConstants.IPatterns.yyyyMMdd, Locale.getDefault())
-        private val yyyyMMddHHmmss = SimpleDateFormat(IConstants.IPatterns.yyyyMMddHHmmss, Locale.getDefault())
+        private val yyyyMMddHHmmss: SimpleDateFormat = SimpleDateFormat(IConstants.IPatterns.yyyyMMddHHmmss, Locale.getDefault())
+        private val ddMMyyyyHHmm: SimpleDateFormat = SimpleDateFormat(IConstants.IPatterns.ddMMyyyyHHmm, Locale.getDefault())
     }
 
-    fun getDate(pDate: String): Date {
-        val dateFormat = yyyyMMddHHmmss
+    fun getDateTime(dateTime: String): Date {
+        val dateFormat: DateFormat = yyyyMMddHHmmss
         dateFormat.timeZone = TimeZone.getTimeZone("UTC")
-        val date: Date
 
+        val date: Date
         try {
-            date = dateFormat.parse(pDate)
+            date = dateFormat.parse(dateTime)
         } catch (e: ParseException) {
             throw RuntimeException(e)
         }
@@ -38,22 +39,7 @@ class Dates {
         return date
     }
 
-    fun getDate(date: Date): String {
-        return yyyyMMdd.format(date)
+    fun getDateTime(dateTime: Date): String {
+        return ddMMyyyyHHmm.format(dateTime)
     }
-
-    /**
-     * @return Current Year
-     */
-    val currentYear: Int get() = Calendar.getInstance().get(Calendar.YEAR)
-
-    /**
-     * @return Current Month
-     */
-    val currentMonth: Int get() = Calendar.getInstance().get(Calendar.MONTH)
-
-    /**
-     * @return Current Day
-     */
-    val currentDay: Int get() = Calendar.getInstance().get(Calendar.DAY_OF_MONTH)
 }
