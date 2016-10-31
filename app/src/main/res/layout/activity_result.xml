@@ -5,7 +5,7 @@
                                                  android:layout_width="match_parent"
                                                  android:layout_height="match_parent"
                                                  android:background="@color/colorPrimary"
-                                                 tools:context="com.baculsoft.kotlin.android.views.activities.MainActivity"
+                                                 tools:context="com.baculsoft.kotlin.android.views.activities.ResultActivity"
                                                  tools:targetApi="LOLLIPOP">
 
     <RelativeLayout
@@ -14,7 +14,7 @@
         android:fitsSystemWindows="true">
 
         <android.support.design.widget.AppBarLayout
-            android:id="@+id/abl_main"
+            android:id="@+id/abl_result"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
@@ -23,7 +23,7 @@
             android:minHeight="?attr/actionBarSize">
 
             <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar_main"
+                android:id="@+id/toolbar_result"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:theme="@style/AppTheme.Toolbar"
@@ -31,9 +31,9 @@
         </android.support.design.widget.AppBarLayout>
 
         <FrameLayout
-            android:id="@+id/fl_main"
+            android:id="@+id/fl_result"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/abl_main"/>
+            android:layout_below="@+id/abl_result"/>
     </RelativeLayout>
 </android.support.design.widget.CoordinatorLayout>

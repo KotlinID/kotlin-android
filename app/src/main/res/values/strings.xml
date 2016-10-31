@@ -2,4 +2,12 @@
 <resources>
     <string name="app_name">Android Kotlin</string>
     <string name="app_desc">Twitter Search | iBacor</string>
+
+    <string name="text_search_type">Search Type</string>
+    <string name="text_search_result">Result Type</string>
+    <string name="text_result">Search Result</string>
+
+    <string name="hint_search">Search Text</string>
+
+    <string name="button_search">Search</string>
 </resources>

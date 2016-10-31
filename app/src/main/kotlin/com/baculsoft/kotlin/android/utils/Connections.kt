@@ -41,11 +41,9 @@ class Connections : Interceptor {
     }
 
     private fun retrofit(): Retrofit {
-        val baseUrl = IConstants.IUrls.BASE_URL
-
         return Retrofit.Builder()
                        .client(okHttpClient())
-                       .baseUrl(baseUrl)
+                       .baseUrl(IConstants.IUrls.BASE_URL)
                        .addConverterFactory(JacksonConverterFactory.create()).build()
     }
 

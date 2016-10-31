@@ -7,21 +7,27 @@ interface IConstants {
 
     interface IKeys {
         companion object {
-            val API_KEY = "6d6bef05027caf28017ba74ebda3c6e0"
+            const val API_KEY = "6d6bef05027caf28017ba74ebda3c6e0"
         }
     }
 
     interface IUrls {
         companion object {
-            val BASE_URL = "http://ibacor.com/api/"
-            val TWITTER_SEARCH = "twitter-search"
+            const val BASE_URL = "http://ibacor.com/api/"
+            const val TWITTER_SEARCH = "twitter-search"
+        }
+    }
+
+    interface IBundles {
+        companion object {
+            const val SEARCH_RESULT = "search_result"
         }
     }
 
     interface IPatterns {
         companion object {
-            val yyyyMMddHHmmss = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
-            val ddMMyyyyHHmm = "dd/MM/yyyy HH:mm"
+            const val yyyyMMddHHmmss = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+            const val ddMMyyyyHHmm = "dd/MM/yyyy HH:mm"
         }
     }
 }

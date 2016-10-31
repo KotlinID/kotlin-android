@@ -34,5 +34,8 @@
                     android:scheme="http"/>
             </intent-filter>
         </activity>
+        <activity
+            android:name="com.baculsoft.kotlin.android.views.activities.ResultActivity"
+            android:screenOrientation="portrait"/>
     </application>
 </manifest>
