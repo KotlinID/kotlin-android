@@ -20,7 +20,7 @@ interface IConstants {
 
     interface IBundles {
         companion object {
-            const val SEARCH_RESULT = "search_result"
+            const val TEXT = "text"
         }
     }
 

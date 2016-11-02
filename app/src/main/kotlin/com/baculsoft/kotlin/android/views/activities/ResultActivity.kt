@@ -7,7 +7,6 @@ import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import com.baculsoft.kotlin.android.R
-import com.baculsoft.kotlin.android.utils.Navigators
 import com.baculsoft.kotlin.android.views.fragments.ResultFragment
 import kotlinx.android.synthetic.main.activity_result.*
 
@@ -21,11 +20,6 @@ class ResultActivity : AppCompatActivity() {
         setContentView(R.layout.activity_result)
         setToolbar()
         setFragment()
-    }
-
-    override fun onBackPressed() {
-        Navigators.get().openMainActivity(this)
-        super.onBackPressed()
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {

@@ -1,9 +1,11 @@
 package com.baculsoft.kotlin.android.views.fragments
 
+import android.os.Build
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.ActionBar
 import android.support.v7.app.AppCompatActivity
+import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -33,7 +35,15 @@ class ResultFragment : Fragment() {
     private fun setComponent() {
         getActionBar()?.title = activity.resources.getString(R.string.text_result)
 
-        val searchResult: String = activity.intent.getStringExtra(IConstants.IBundles.SEARCH_RESULT)
-        tv_result.text = searchResult
+        val text: String = activity.intent.getStringExtra(IConstants.IBundles.TEXT)
+        tv_result.text = convertToHtml(text)
+    }
+
+    private fun convertToHtml(source: String): CharSequence? {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            return Html.fromHtml(source, Html.FROM_HTML_MODE_LEGACY);
+        } else {
+            return Html.fromHtml(source);
+        }
     }
 }

@@ -1,6 +1,7 @@
 package com.baculsoft.kotlin.android.views.fragments
 
 import android.os.Bundle
+import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.support.v7.app.ActionBar
 import android.support.v7.app.AppCompatActivity
@@ -11,14 +12,12 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import com.baculsoft.kotlin.android.R
 import com.baculsoft.kotlin.android.internal.api.response.TwitterSearchResponse
 import com.baculsoft.kotlin.android.utils.Connections
 import com.baculsoft.kotlin.android.utils.IConstants
 import com.baculsoft.kotlin.android.utils.Keyboards
 import com.baculsoft.kotlin.android.utils.Navigators
-import com.baculsoft.kotlin.android.views.activities.MainActivity
 import kotlinx.android.synthetic.main.fragment_main.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -70,11 +69,7 @@ class MainFragment : Fragment() {
     }
 
     private fun onButtonClick() {
-        sv_main_search.visibility = View.GONE
-        btn_main_search.visibility = View.GONE
-        pb_main_search.visibility = View.VISIBLE
-
-        Keyboards.get().hide(rl_main_search, context)
+        hideField()
         getTwitterSearch()
     }
 
@@ -87,16 +82,48 @@ class MainFragment : Fragment() {
             override fun onResponse(call: Call<TwitterSearchResponse>?, response: Response<TwitterSearchResponse>?) {
                 when (response?.code()) {
                     200 -> {
-                        val searchResult = response?.body()?.statuses?.get(0)?.text
-                        Navigators.get().openResultActivity(activity, searchResult)
+                        resetField()
+
+                        val statuses: List<TwitterSearchResponse.Statuses>? = response?.body()?.statuses
+                        if (statuses?.size != 0) {
+                            val text: String? = statuses?.get(0)?.text
+                            Navigators.get().openResultActivity(activity, text)
+                        } else {
+                            Snackbar.make(rl_main_search, "No result! -> " + statuses?.size, Snackbar.LENGTH_SHORT).show()
+                            Log.e(MainFragment::class.java.simpleName, "No result! -> " + statuses?.size)
+                        }
+                    }
+                    else -> {
+                        resetField()
+                        Snackbar.make(rl_main_search, "onUnknownResponse -> " + response?.code(), Snackbar.LENGTH_SHORT).show()
+                        Log.e(MainFragment::class.java.simpleName, "onUnknownResponse -> " + response?.code())
                     }
                 }
             }
 
             override fun onFailure(call: Call<TwitterSearchResponse>?, throwable: Throwable?) {
-                Toast.makeText(context, "onFailure -> " + throwable?.message, Toast.LENGTH_SHORT).show()
-                Log.e(MainActivity::class.java.simpleName, throwable?.message)
+                resetField()
+                Snackbar.make(rl_main_search, "onFailure -> " + throwable?.message, Snackbar.LENGTH_SHORT).show()
+                Log.e(MainFragment::class.java.simpleName, "onFailure -> " + throwable?.message)
             }
         })
+    }
+
+    private fun hideField() {
+        sv_main_search.visibility = View.GONE
+        btn_main_search.visibility = View.GONE
+        pb_main_search.visibility = View.VISIBLE
+
+        Keyboards.get().hide(rl_main_search, context)
+    }
+
+    private fun resetField() {
+        tiet_main_search.text.clear()
+        sp_main_search_type.setSelection(0)
+        sp_main_search_result.setSelection(0)
+
+        pb_main_search.visibility = View.GONE
+        sv_main_search.visibility = View.VISIBLE
+        btn_main_search.visibility = View.VISIBLE
     }
 }

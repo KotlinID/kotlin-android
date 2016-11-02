@@ -8,7 +8,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:gravity="center"
+        android:autoLink="all"
+        android:gravity="start"
+        android:padding="16dp"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="16sp"/>
 </RelativeLayout>

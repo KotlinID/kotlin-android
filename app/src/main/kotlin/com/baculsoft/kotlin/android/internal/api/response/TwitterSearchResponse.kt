@@ -2,7 +2,6 @@ package com.baculsoft.kotlin.android.internal.api.response
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
-import org.parceler.Parcel
 
 /**
  * @author Budi Oktaviyan Suryanto (budi@baculsoft.com)
@@ -17,7 +16,6 @@ class TwitterSearchResponse {
     var searchMetadata: SearchMetadata? = null
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    @Parcel
     class Statuses {
 
         @JsonProperty(value = "created_at")
