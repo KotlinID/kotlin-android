@@ -2,25 +2,16 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:app="http://schemas.android.com/apk/res-auto"
                 xmlns:tools="http://schemas.android.com/tools"
-                android:id="@+id/rl_main_search"
+                android:id="@+id/rl_main"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/colorPrimary"
                 tools:targetApi="LOLLIPOP">
 
-    <ProgressBar
-        android:id="@+id/pb_main_search"
-        style="?android:attr/progressBarStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:visibility="gone"/>
-
     <ScrollView
-        android:id="@+id/sv_main_search"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/btn_main_search"
+        android:layout_above="@+id/btn_main"
         android:fillViewport="true">
 
         <LinearLayout
@@ -37,11 +28,11 @@
                 app:hintTextAppearance="@style/AppTheme.TextInputLayout">
 
                 <android.support.design.widget.TextInputEditText
-                    android:id="@+id/tiet_main_search"
+                    android:id="@+id/tiet_main"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/colorAccent"
-                    android:hint="@string/hint_search"
+                    android:hint="@string/hint_search_text"
                     android:imeOptions="actionDone"
                     android:inputType="text"
                     android:textColor="@color/colorPrimaryDark"
@@ -60,7 +51,7 @@
                 android:textSize="14sp"/>
 
             <Spinner
-                android:id="@+id/sp_main_search_type"
+                android:id="@+id/sp_main_type"
                 style="@style/Widget.AppCompat.Spinner.Underlined"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -75,24 +66,24 @@
                 android:layout_marginEnd="4dp"
                 android:layout_marginStart="4dp"
                 android:layout_marginTop="8dp"
-                android:text="@string/text_search_result"
+                android:text="@string/text_result_type"
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="14sp"/>
 
             <Spinner
-                android:id="@+id/sp_main_search_result"
+                android:id="@+id/sp_main_result"
                 style="@style/Widget.AppCompat.Spinner.Underlined"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:backgroundTint="@color/colorAccent"
-                android:entries="@array/search_results"
+                android:entries="@array/result_types"
                 android:spinnerMode="dropdown"/>
         </LinearLayout>
     </ScrollView>
 
     <Button
-        android:id="@+id/btn_main_search"
+        android:id="@+id/btn_main"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"

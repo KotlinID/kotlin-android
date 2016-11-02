@@ -4,7 +4,7 @@
         <item>Tag</item>
         <item>Word</item>
     </string-array>
-    <string-array name="search_results">
+    <string-array name="result_types">
         <item>Mixed</item>
         <item>Recent</item>
         <item>Popular</item>

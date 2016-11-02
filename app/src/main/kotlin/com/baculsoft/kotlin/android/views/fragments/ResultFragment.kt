@@ -29,11 +29,11 @@ class ResultFragment : Fragment() {
     }
 
     fun getActionBar(): ActionBar? {
-        return (activity as AppCompatActivity).supportActionBar
+        return (context as AppCompatActivity).supportActionBar
     }
 
     private fun setComponent() {
-        getActionBar()?.title = activity.resources.getString(R.string.text_result)
+        getActionBar()?.title = context.resources.getString(R.string.text_search_result)
 
         val text: String = activity.intent.getStringExtra(IConstants.IBundles.TEXT)
         tv_result.text = convertToHtml(text)
@@ -41,9 +41,9 @@ class ResultFragment : Fragment() {
 
     private fun convertToHtml(source: String): CharSequence? {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            return Html.fromHtml(source, Html.FROM_HTML_MODE_LEGACY);
+            return Html.fromHtml(source, Html.FROM_HTML_MODE_LEGACY)
         } else {
-            return Html.fromHtml(source);
+            return Html.fromHtml(source)
         }
     }
 }

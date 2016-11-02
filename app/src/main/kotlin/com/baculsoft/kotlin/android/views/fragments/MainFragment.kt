@@ -1,5 +1,7 @@
 package com.baculsoft.kotlin.android.views.fragments
 
+import android.app.ProgressDialog
+import android.content.Context
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
@@ -12,6 +14,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import com.baculsoft.kotlin.android.R
 import com.baculsoft.kotlin.android.internal.api.response.TwitterSearchResponse
 import com.baculsoft.kotlin.android.utils.Connections
@@ -27,6 +30,7 @@ import retrofit2.Response
  * @author Budi Oktaviyan Suryanto (budi@baculsoft.com)
  */
 class MainFragment : Fragment() {
+    private var progressDialog: ProgressDialog? = null
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -39,14 +43,25 @@ class MainFragment : Fragment() {
     }
 
     fun getActionBar(): ActionBar? {
-        return (activity as AppCompatActivity).supportActionBar
+        return (context as AppCompatActivity).supportActionBar
+    }
+
+    fun getProgressDialog(context: Context): ProgressDialog? {
+        val progressDialog: ProgressDialog = ProgressDialog(context)
+        progressDialog.setMessage(context.resources.getString(R.string.message_search))
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER)
+        progressDialog.setCanceledOnTouchOutside(false)
+        progressDialog.setOnKeyListener { dialogInterface, keyCode, event -> true }
+
+        return progressDialog
     }
 
     private fun setComponent() {
-        getActionBar()?.title = activity.resources.getString(R.string.app_name)
-        getActionBar()?.subtitle = activity.resources.getString(R.string.app_desc)
+        getActionBar()?.title = context.resources.getString(R.string.app_name)
+        getActionBar()?.subtitle = context.resources.getString(R.string.app_desc)
+        progressDialog = getProgressDialog(context)
 
-        tiet_main_search.addTextChangedListener(object : TextWatcher {
+        tiet_main.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
             }
 
@@ -57,73 +72,81 @@ class MainFragment : Fragment() {
                 onValidate()
             }
         })
+
+        tiet_main.setOnEditorActionListener { textView, actionId, event ->
+            when (actionId) {
+                EditorInfo.IME_ACTION_DONE -> {
+                    if (btn_main.isEnabled) {
+                        onButtonClick()
+                        true
+                    } else {
+                        false
+                    }
+                }
+                else -> false
+            }
+        }
     }
 
     private fun onValidate() {
-        if (!TextUtils.isEmpty(tiet_main_search.text)) {
-            btn_main_search.isEnabled = true
-            btn_main_search.setOnClickListener { view -> onButtonClick() }
+        if (!TextUtils.isEmpty(tiet_main.text)) {
+            btn_main.isEnabled = true
+            btn_main.setOnClickListener { view -> onButtonClick() }
         } else {
-            btn_main_search.isEnabled = false
+            btn_main.isEnabled = false
         }
     }
 
     private fun onButtonClick() {
-        hideField()
+        Keyboards.get().hide(rl_main, context)
+        progressDialog?.show()
         getTwitterSearch()
     }
 
     private fun getTwitterSearch() {
-        val searchText: String = tiet_main_search.text.toString()
-        val searchType: String = sp_main_search_type.selectedItem.toString().toLowerCase()
-        val searchResult: String = sp_main_search_result.selectedItem.toString().toLowerCase()
+        val searchText: String = tiet_main.text.toString()
+        val searchType: String = sp_main_type.selectedItem.toString().toLowerCase()
+        val resultType: String = sp_main_result.selectedItem.toString().toLowerCase()
 
-        Connections.get().api().getTwitterSearch(searchText, searchType, searchResult, IConstants.IKeys.API_KEY).enqueue(object : Callback<TwitterSearchResponse> {
+        Connections.get().api().getTwitterSearch(searchText, searchType, resultType, IConstants.IKeys.API_KEY).enqueue(object : Callback<TwitterSearchResponse> {
             override fun onResponse(call: Call<TwitterSearchResponse>?, response: Response<TwitterSearchResponse>?) {
                 when (response?.code()) {
                     200 -> {
-                        resetField()
-
-                        val statuses: List<TwitterSearchResponse.Statuses>? = response?.body()?.statuses
-                        if (statuses?.size != 0) {
-                            val text: String? = statuses?.get(0)?.text
-                            Navigators.get().openResultActivity(activity, text)
-                        } else {
-                            Snackbar.make(rl_main_search, "No result! -> " + statuses?.size, Snackbar.LENGTH_SHORT).show()
-                            Log.e(MainFragment::class.java.simpleName, "No result! -> " + statuses?.size)
-                        }
+                        onResetField()
+                        onSearchResult(response?.body())
                     }
                     else -> {
-                        resetField()
-                        Snackbar.make(rl_main_search, "onUnknownResponse -> " + response?.code(), Snackbar.LENGTH_SHORT).show()
-                        Log.e(MainFragment::class.java.simpleName, "onUnknownResponse -> " + response?.code())
+                        onResetField()
+                        Snackbar.make(rl_main, "onUnknownResponse -> ".plus(response?.code()), Snackbar.LENGTH_SHORT).show()
+                        Log.e(MainFragment::class.java.simpleName, "onUnknownResponse -> ".plus(response?.code()))
                     }
                 }
             }
 
             override fun onFailure(call: Call<TwitterSearchResponse>?, throwable: Throwable?) {
-                resetField()
-                Snackbar.make(rl_main_search, "onFailure -> " + throwable?.message, Snackbar.LENGTH_SHORT).show()
-                Log.e(MainFragment::class.java.simpleName, "onFailure -> " + throwable?.message)
+                onResetField()
+                Snackbar.make(rl_main, "onFailure -> ".plus(throwable?.message), Snackbar.LENGTH_SHORT).show()
+                Log.e(MainFragment::class.java.simpleName, "onFailure -> ".plus(throwable?.message))
             }
         })
     }
 
-    private fun hideField() {
-        sv_main_search.visibility = View.GONE
-        btn_main_search.visibility = View.GONE
-        pb_main_search.visibility = View.VISIBLE
-
-        Keyboards.get().hide(rl_main_search, context)
+    private fun onResetField() {
+        progressDialog?.dismiss()
+        tiet_main.text.clear()
+        sp_main_type.setSelection(0)
+        sp_main_result.setSelection(0)
     }
 
-    private fun resetField() {
-        tiet_main_search.text.clear()
-        sp_main_search_type.setSelection(0)
-        sp_main_search_result.setSelection(0)
+    private fun onSearchResult(response: TwitterSearchResponse?) {
+        val statuses: List<TwitterSearchResponse.Statuses>? = response?.statuses
 
-        pb_main_search.visibility = View.GONE
-        sv_main_search.visibility = View.VISIBLE
-        btn_main_search.visibility = View.VISIBLE
+        if (statuses?.size != 0) {
+            val text: String? = statuses?.get(0)?.text
+            Navigators.get().openResultActivity(context, text)
+        } else {
+            Snackbar.make(rl_main, "onSearchResult -> ".plus(statuses?.size), Snackbar.LENGTH_SHORT).show()
+            Log.e(MainFragment::class.java.simpleName, "onSearchResult -> ".plus(statuses?.size))
+        }
     }
 }

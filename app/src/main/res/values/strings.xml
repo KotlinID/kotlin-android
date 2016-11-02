@@ -4,10 +4,12 @@
     <string name="app_desc">Twitter Search | iBacor</string>
 
     <string name="text_search_type">Search Type</string>
-    <string name="text_search_result">Result Type</string>
-    <string name="text_result">Search Result</string>
+    <string name="text_result_type">Result Type</string>
+    <string name="text_search_result">Search Result</string>
 
-    <string name="hint_search">Search Text</string>
+    <string name="hint_search_text">Search Text</string>
 
     <string name="button_search">Search</string>
+
+    <string name="message_search">Searching&#8230;</string>
 </resources>
