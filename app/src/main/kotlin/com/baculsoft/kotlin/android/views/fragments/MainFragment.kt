@@ -17,6 +17,8 @@ import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import com.baculsoft.kotlin.android.R
 import com.baculsoft.kotlin.android.internal.api.response.TwitterSearchResponse
+import com.baculsoft.kotlin.android.internal.pojo.TwitterSearch
+import com.baculsoft.kotlin.android.internal.pojo.TwitterSearchResult
 import com.baculsoft.kotlin.android.utils.Connections
 import com.baculsoft.kotlin.android.utils.IConstants
 import com.baculsoft.kotlin.android.utils.Keyboards
@@ -104,11 +106,12 @@ class MainFragment : Fragment() {
     }
 
     private fun getTwitterSearch() {
-        val searchText: String = tiet_main.text.toString()
-        val searchType: String = sp_main_type.selectedItem.toString().toLowerCase()
+        val query: String = tiet_main.text.toString()
+        val typeSearch: String = sp_main_type.selectedItem.toString().toLowerCase()
         val resultType: String = sp_main_result.selectedItem.toString().toLowerCase()
+        val key: String = IConstants.IKeys.API_KEY
 
-        Connections.get().api().getTwitterSearch(searchText, searchType, resultType, IConstants.IKeys.API_KEY).enqueue(object : Callback<TwitterSearchResponse> {
+        Connections.get().api().getTwitterSearch(query, typeSearch, resultType, key).enqueue(object : Callback<TwitterSearchResponse> {
             override fun onResponse(call: Call<TwitterSearchResponse>?, response: Response<TwitterSearchResponse>?) {
                 when (response?.code()) {
                     200 -> {
@@ -142,8 +145,13 @@ class MainFragment : Fragment() {
         val statuses: List<TwitterSearchResponse.Statuses>? = response?.statuses
 
         if (statuses?.size != 0) {
-            val text: String? = statuses?.get(0)?.text
-            Navigators.get().openResultActivity(context, text)
+            val results: List<TwitterSearchResult> = statuses!!.map {
+                val result = it.text
+                TwitterSearchResult(result)
+            }
+
+            val twitterSearch: TwitterSearch = TwitterSearch(results)
+            Navigators.get().openResultActivity(context, twitterSearch)
         } else {
             Snackbar.make(rl_main, "onSearchResult -> ".plus(statuses?.size), Snackbar.LENGTH_SHORT).show()
             Log.e(MainFragment::class.java.simpleName, "onSearchResult -> ".plus(statuses?.size))

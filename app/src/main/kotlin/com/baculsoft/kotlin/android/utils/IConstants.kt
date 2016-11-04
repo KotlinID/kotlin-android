@@ -20,7 +20,7 @@ interface IConstants {
 
     interface IBundles {
         companion object {
-            const val TEXT = "text"
+            const val TWITTER_SEARCH = "twitter_search"
         }
     }
 

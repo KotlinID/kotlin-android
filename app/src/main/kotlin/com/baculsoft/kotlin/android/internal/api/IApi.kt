@@ -12,8 +12,8 @@ import retrofit2.http.Query
 interface IApi {
 
     @GET(IConstants.IUrls.TWITTER_SEARCH)
-    fun getTwitterSearch(@Query("q") q: String,
-                         @Query("t") t: String,
-                         @Query("r") r: String,
-                         @Query("k") k: String): Call<TwitterSearchResponse>
+    fun getTwitterSearch(@Query("q") query: String,
+                         @Query("t") typeSearch: String,
+                         @Query("r") resultType: String,
+                         @Query("k") key: String): Call<TwitterSearchResponse>
 }

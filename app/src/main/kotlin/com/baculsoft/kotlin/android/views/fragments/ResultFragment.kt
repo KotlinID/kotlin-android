@@ -10,6 +10,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.baculsoft.kotlin.android.R
+import com.baculsoft.kotlin.android.internal.pojo.TwitterSearch
+import com.baculsoft.kotlin.android.internal.pojo.TwitterSearchResult
 import com.baculsoft.kotlin.android.utils.IConstants
 import kotlinx.android.synthetic.main.fragment_result.*
 
@@ -35,11 +37,13 @@ class ResultFragment : Fragment() {
     private fun setComponent() {
         getActionBar()?.title = context.resources.getString(R.string.text_search_result)
 
-        val text: String = activity.intent.getStringExtra(IConstants.IBundles.TEXT)
+        val twitterSearch: TwitterSearch = activity.intent.getParcelableExtra(IConstants.IBundles.TWITTER_SEARCH)
+        val results: List<TwitterSearchResult> = twitterSearch.results
+        val text: String = results[0].text
         tv_result.text = convertToHtml(text)
     }
 
-    private fun convertToHtml(source: String): CharSequence? {
+    private fun convertToHtml(source: String?): CharSequence? {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             return Html.fromHtml(source, Html.FROM_HTML_MODE_LEGACY)
         } else {

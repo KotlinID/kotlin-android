@@ -19,10 +19,10 @@ class TwitterSearchResponse {
     class Statuses {
 
         @JsonProperty(value = "created_at")
-        var createdAt: String? = ""
+        var createdAt: String = ""
 
         @JsonProperty(value = "text")
-        var text: String? = ""
+        var text: String = ""
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
