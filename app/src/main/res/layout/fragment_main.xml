@@ -66,6 +66,7 @@
                 android:layout_marginEnd="4dp"
                 android:layout_marginStart="4dp"
                 android:layout_marginTop="8dp"
+                android:lineSpacingExtra="2sp"
                 android:text="@string/text_search_type"
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="14sp"/>
@@ -86,6 +87,7 @@
                 android:layout_marginEnd="4dp"
                 android:layout_marginStart="4dp"
                 android:layout_marginTop="8dp"
+                android:lineSpacingExtra="2sp"
                 android:text="@string/text_result_type"
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="14sp"/>

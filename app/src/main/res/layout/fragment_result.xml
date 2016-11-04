@@ -4,14 +4,9 @@
                 android:layout_height="match_parent"
                 android:background="@color/colorPrimary">
 
-    <TextView
-        android:id="@+id/tv_result"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_result"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:autoLink="all"
-        android:gravity="start"
-        android:padding="16dp"
-        android:textColor="@color/colorPrimaryDark"
-        android:textSize="14sp"/>
+        android:scrollbars="vertical"/>
 </RelativeLayout>
