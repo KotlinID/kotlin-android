@@ -28,13 +28,33 @@
                 app:hintTextAppearance="@style/AppTheme.TextInputLayout">
 
                 <android.support.design.widget.TextInputEditText
-                    android:id="@+id/tiet_main"
+                    android:id="@+id/tiet_main_query"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/colorAccent"
                     android:hint="@string/hint_search_text"
-                    android:imeOptions="actionDone"
+                    android:imeOptions="actionNext"
                     android:inputType="text"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textCursorDrawable="@drawable/bg_text_cursor"
+                    android:textSize="14sp"/>
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                style="@style/AppTheme.TextInputLayoutHint"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                app:hintTextAppearance="@style/AppTheme.TextInputLayout">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/tiet_main_page"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/colorAccent"
+                    android:hint="@string/hint_search_page"
+                    android:imeOptions="actionDone"
+                    android:inputType="number"
                     android:textColor="@color/colorPrimaryDark"
                     android:textCursorDrawable="@drawable/bg_text_cursor"
                     android:textSize="14sp"/>

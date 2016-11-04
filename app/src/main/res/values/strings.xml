@@ -9,6 +9,7 @@
     <string name="text_search_count">Total %d</string>
 
     <string name="hint_search_text">Search Text</string>
+    <string name="hint_search_page">Page Number</string>
 
     <string name="button_search">Search</string>
 

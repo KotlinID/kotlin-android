@@ -63,7 +63,26 @@ class MainFragment : Fragment() {
         getActionBar()?.subtitle = context.resources.getString(R.string.app_desc)
         progressDialog = getProgressDialog(context)
 
-        tiet_main.addTextChangedListener(object : TextWatcher {
+        setTextQueryListener()
+        setTextPageListener()
+    }
+
+    private fun setTextQueryListener() {
+        tiet_main_query.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                onValidate()
+            }
+        })
+    }
+
+    private fun setTextPageListener() {
+        tiet_main_page.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
             }
 
@@ -75,7 +94,7 @@ class MainFragment : Fragment() {
             }
         })
 
-        tiet_main.setOnEditorActionListener { textView, actionId, event ->
+        tiet_main_page.setOnEditorActionListener { textView, actionId, event ->
             when (actionId) {
                 EditorInfo.IME_ACTION_DONE -> {
                     if (btn_main.isEnabled) {
@@ -91,7 +110,8 @@ class MainFragment : Fragment() {
     }
 
     private fun onValidate() {
-        if (!TextUtils.isEmpty(tiet_main.text)) {
+        if (!TextUtils.isEmpty(tiet_main_query.text) &&
+            !TextUtils.isEmpty(tiet_main_page.text)) {
             btn_main.isEnabled = true
             btn_main.setOnClickListener { view -> onButtonClick() }
         } else {
@@ -106,12 +126,13 @@ class MainFragment : Fragment() {
     }
 
     private fun getTwitterSearch() {
-        val query: String = tiet_main.text.toString()
+        val query: String = tiet_main_query.text.toString()
         val typeSearch: String = sp_main_type.selectedItem.toString().toLowerCase()
         val resultType: String = sp_main_result.selectedItem.toString().toLowerCase()
+        val maxId: Int = Integer.parseInt(tiet_main_page.text.toString())
         val key: String = IConstants.IKeys.API_KEY
 
-        Connections.get().api().getTwitterSearch(query, typeSearch, resultType, key).enqueue(object : Callback<TwitterSearchResponse> {
+        Connections.get().api().getTwitterSearch(query, typeSearch, resultType, maxId, key).enqueue(object : Callback<TwitterSearchResponse> {
             override fun onResponse(call: Call<TwitterSearchResponse>?, response: Response<TwitterSearchResponse>) {
                 when (response.code()) {
                     200 -> {
@@ -142,7 +163,8 @@ class MainFragment : Fragment() {
 
     private fun onResetField() {
         progressDialog?.dismiss()
-        tiet_main.text.clear()
+        tiet_main_query.text.clear()
+        tiet_main_page.text.clear()
         sp_main_type.setSelection(0)
         sp_main_result.setSelection(0)
     }

@@ -15,5 +15,6 @@ interface IApi {
     fun getTwitterSearch(@Query("q") query: String,
                          @Query("t") typeSearch: String,
                          @Query("r") resultType: String,
+                         @Query("n") maxId: Int,
                          @Query("k") key: String): Call<TwitterSearchResponse>
 }
