@@ -10,25 +10,25 @@ import com.fasterxml.jackson.annotation.JsonProperty
 class TwitterSearchResponse {
 
     @JsonProperty(value = "statuses")
-    var statuses: List<Statuses>? = null
+    val statuses: List<Statuses> = arrayListOf(Statuses())
 
     @JsonProperty(value = "search_metadata")
-    var searchMetadata: SearchMetadata? = null
+    val searchMetadata: SearchMetadata = SearchMetadata()
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     class Statuses {
 
         @JsonProperty(value = "created_at")
-        var createdAt: String = ""
+        val createdAt: String = ""
 
         @JsonProperty(value = "text")
-        var text: String = ""
+        val text: String = ""
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     class SearchMetadata {
 
         @JsonProperty(value = "count")
-        var count: Int = 0
+        val count: Int = 0
     }
 }

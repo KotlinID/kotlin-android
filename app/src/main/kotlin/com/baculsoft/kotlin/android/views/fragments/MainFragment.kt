@@ -112,16 +112,22 @@ class MainFragment : Fragment() {
         val key: String = IConstants.IKeys.API_KEY
 
         Connections.get().api().getTwitterSearch(query, typeSearch, resultType, key).enqueue(object : Callback<TwitterSearchResponse> {
-            override fun onResponse(call: Call<TwitterSearchResponse>?, response: Response<TwitterSearchResponse>?) {
-                when (response?.code()) {
+            override fun onResponse(call: Call<TwitterSearchResponse>?, response: Response<TwitterSearchResponse>) {
+                when (response.code()) {
                     200 -> {
                         onResetField()
-                        onSearchResult(response?.body())
+
+                        if (null != response.body()) {
+                            onSearchResult(response.body())
+                        } else {
+                            Snackbar.make(rl_main, "onSearchResult -> ".plus(response.body()), Snackbar.LENGTH_SHORT).show()
+                            Log.e(MainFragment::class.java.simpleName, "onSearchResult -> ".plus(response.body()))
+                        }
                     }
                     else -> {
                         onResetField()
-                        Snackbar.make(rl_main, "onUnknownResponse -> ".plus(response?.code()), Snackbar.LENGTH_SHORT).show()
-                        Log.e(MainFragment::class.java.simpleName, "onUnknownResponse -> ".plus(response?.code()))
+                        Snackbar.make(rl_main, "onUnknownResponse -> ".plus(response.code()), Snackbar.LENGTH_SHORT).show()
+                        Log.e(MainFragment::class.java.simpleName, "onUnknownResponse -> ".plus(response.code()))
                     }
                 }
             }
@@ -141,24 +147,24 @@ class MainFragment : Fragment() {
         sp_main_result.setSelection(0)
     }
 
-    private fun onSearchResult(response: TwitterSearchResponse?) {
-        val statuses: List<TwitterSearchResponse.Statuses>? = response?.statuses
-        val searchMetadata: TwitterSearchResponse.SearchMetadata? = response?.searchMetadata
+    private fun onSearchResult(response: TwitterSearchResponse) {
+        val statuses: List<TwitterSearchResponse.Statuses> = response.statuses
+        val searchMetadata: TwitterSearchResponse.SearchMetadata = response.searchMetadata
 
-        if (statuses?.size != 0) {
+        if (statuses.size != 0) {
             val results: List<TwitterSearchResult> = getTwitterSearchResult(statuses)
-            val count: Int = searchMetadata!!.count
+            val count: Int = searchMetadata.count
             val twitterSearch: TwitterSearch = TwitterSearch(results, count)
 
             Navigators.get().openResultActivity(context, twitterSearch)
         } else {
-            Snackbar.make(rl_main, "onSearchResult -> ".plus(statuses?.size), Snackbar.LENGTH_SHORT).show()
-            Log.e(MainFragment::class.java.simpleName, "onSearchResult -> ".plus(statuses?.size))
+            Snackbar.make(rl_main, "onSearchResult -> ".plus(statuses.size), Snackbar.LENGTH_SHORT).show()
+            Log.e(MainFragment::class.java.simpleName, "onSearchResult -> ".plus(statuses.size))
         }
     }
 
-    private fun getTwitterSearchResult(statuses: List<TwitterSearchResponse.Statuses>?): List<TwitterSearchResult> {
-        val results: List<TwitterSearchResult> = statuses!!.map {
+    private fun getTwitterSearchResult(statuses: List<TwitterSearchResponse.Statuses>): List<TwitterSearchResult> {
+        val results: List<TwitterSearchResult> = statuses.map {
             val text: String = it.text
             TwitterSearchResult(text)
         }
