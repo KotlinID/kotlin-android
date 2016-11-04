@@ -7,6 +7,7 @@
     <string name="text_result_type">Result Type</string>
     <string name="text_search_result">Search Result</string>
     <string name="text_search_count">Total %d</string>
+    <string name="text_posted">Posted %1$s</string>
 
     <string name="hint_search_text">Search Text</string>
     <string name="hint_search_page">Page Number</string>

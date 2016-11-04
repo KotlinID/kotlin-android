@@ -188,7 +188,9 @@ class MainFragment : Fragment() {
     private fun getTwitterSearchResult(statuses: List<TwitterSearchResponse.Statuses>): List<TwitterSearchResult> {
         val results: List<TwitterSearchResult> = statuses.map {
             val text: String = it.text
-            TwitterSearchResult(text)
+            val createdAt: String = it.createdAt
+
+            TwitterSearchResult(text, createdAt)
         }
 
         return results

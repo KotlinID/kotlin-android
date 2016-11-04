@@ -26,8 +26,8 @@ interface IConstants {
 
     interface IPatterns {
         companion object {
-            const val yyyyMMddHHmmss = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
-            const val ddMMyyyyHHmm = "dd/MM/yyyy HH:mm"
+            const val EEEMMMddHHmmsszzzyyyy = "EEE MMM dd HH:mm:ss zzz yyyy"
+            const val ddMMyyyyHHmmss = "dd/MM/yyyy HH:mm:ss"
         }
     }
 }

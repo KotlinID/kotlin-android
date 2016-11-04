@@ -46,7 +46,7 @@ class ResultFragment : Fragment() {
     }
 
     private fun setAdapter(results: List<TwitterSearchResult>) {
-        val adapter: ResultAdapter = ResultAdapter(results)
+        val adapter: ResultAdapter = ResultAdapter(context, results)
         val linearLayoutManager: LinearLayoutManager = LinearLayoutManager(context)
 
         rv_result.layoutManager = linearLayoutManager

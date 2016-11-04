@@ -21,12 +21,12 @@ class Dates {
             return INSTANCE as Dates
         }
 
-        private val yyyyMMddHHmmss: SimpleDateFormat = SimpleDateFormat(IConstants.IPatterns.yyyyMMddHHmmss, Locale.getDefault())
-        private val ddMMyyyyHHmm: SimpleDateFormat = SimpleDateFormat(IConstants.IPatterns.ddMMyyyyHHmm, Locale.getDefault())
+        private val EEEMMMddHHmmsszzzyyyy: SimpleDateFormat = SimpleDateFormat(IConstants.IPatterns.EEEMMMddHHmmsszzzyyyy, Locale.getDefault())
+        private val ddMMyyyyHHmmss: SimpleDateFormat = SimpleDateFormat(IConstants.IPatterns.ddMMyyyyHHmmss, Locale.getDefault())
     }
 
     fun getDateTime(dateTime: String): Date {
-        val dateFormat: DateFormat = yyyyMMddHHmmss
+        val dateFormat: DateFormat = EEEMMMddHHmmsszzzyyyy
         dateFormat.timeZone = TimeZone.getTimeZone("UTC")
 
         val date: Date
@@ -40,6 +40,6 @@ class Dates {
     }
 
     fun getDateTime(dateTime: Date): String {
-        return ddMMyyyyHHmm.format(dateTime)
+        return ddMMyyyyHHmmss.format(dateTime)
     }
 }
