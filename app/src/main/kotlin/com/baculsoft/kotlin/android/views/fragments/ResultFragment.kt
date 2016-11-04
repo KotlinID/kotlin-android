@@ -35,15 +35,17 @@ class ResultFragment : Fragment() {
     }
 
     private fun setComponent() {
-        getActionBar()?.title = context.resources.getString(R.string.text_search_result)
-
         val twitterSearch: TwitterSearch = activity.intent.getParcelableExtra(IConstants.IBundles.TWITTER_SEARCH)
         val results: List<TwitterSearchResult> = twitterSearch.results
+        val count: Int = twitterSearch.count
         val text: String = results[0].text
+
+        getActionBar()?.title = context.resources.getString(R.string.text_search_result)
+        getActionBar()?.subtitle = String.format(context.resources.getString(R.string.text_search_count), count)
         tv_result.text = convertToHtml(text)
     }
 
-    private fun convertToHtml(source: String?): CharSequence? {
+    private fun convertToHtml(source: String): CharSequence? {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             return Html.fromHtml(source, Html.FROM_HTML_MODE_LEGACY)
         } else {

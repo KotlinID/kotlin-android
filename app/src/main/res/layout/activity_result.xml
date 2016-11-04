@@ -26,6 +26,7 @@
                 android:id="@+id/toolbar_result"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:subtitleTextAppearance="@style/AppTheme.ToolbarSubtitle"
                 app:theme="@style/AppTheme.Toolbar"
                 app:titleTextAppearance="@style/AppTheme.ToolbarTitle"/>
         </android.support.design.widget.AppBarLayout>

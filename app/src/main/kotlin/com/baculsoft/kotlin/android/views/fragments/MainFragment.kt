@@ -143,18 +143,26 @@ class MainFragment : Fragment() {
 
     private fun onSearchResult(response: TwitterSearchResponse?) {
         val statuses: List<TwitterSearchResponse.Statuses>? = response?.statuses
+        val searchMetadata: TwitterSearchResponse.SearchMetadata? = response?.searchMetadata
 
         if (statuses?.size != 0) {
-            val results: List<TwitterSearchResult> = statuses!!.map {
-                val result = it.text
-                TwitterSearchResult(result)
-            }
+            val results: List<TwitterSearchResult> = getTwitterSearchResult(statuses)
+            val count: Int = searchMetadata!!.count
+            val twitterSearch: TwitterSearch = TwitterSearch(results, count)
 
-            val twitterSearch: TwitterSearch = TwitterSearch(results)
             Navigators.get().openResultActivity(context, twitterSearch)
         } else {
             Snackbar.make(rl_main, "onSearchResult -> ".plus(statuses?.size), Snackbar.LENGTH_SHORT).show()
             Log.e(MainFragment::class.java.simpleName, "onSearchResult -> ".plus(statuses?.size))
         }
+    }
+
+    private fun getTwitterSearchResult(statuses: List<TwitterSearchResponse.Statuses>?): List<TwitterSearchResult> {
+        val results: List<TwitterSearchResult> = statuses!!.map {
+            val text: String = it.text
+            TwitterSearchResult(text)
+        }
+
+        return results
     }
 }

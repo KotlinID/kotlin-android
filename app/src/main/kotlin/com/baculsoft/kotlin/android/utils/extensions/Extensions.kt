@@ -15,5 +15,9 @@ inline fun <reified T : Parcelable> createParcel(crossinline createFromParcel: (
         }
 
 fun <T : Parcelable> Parcel.readParcelable(creator: Parcelable.Creator<T>): T? {
-    if (readString() != null) return creator.createFromParcel(this) else return null
+    if (null != readString()) {
+        return creator.createFromParcel(this)
+    } else {
+        return null
+    }
 }
