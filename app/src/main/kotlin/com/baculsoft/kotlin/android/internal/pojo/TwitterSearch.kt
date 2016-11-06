@@ -2,7 +2,6 @@ package com.baculsoft.kotlin.android.internal.pojo
 
 import android.os.Parcel
 import android.os.Parcelable
-import com.baculsoft.kotlin.android.utils.extensions.createParcel
 
 /**
  * @author Budi Oktaviyan Suryanto (budi@baculsoft.com)
@@ -13,7 +12,10 @@ data class TwitterSearch(
 ) : Parcelable {
 
     companion object {
-        @JvmField val CREATOR = createParcel(::TwitterSearch)
+        @JvmField val CREATOR: Parcelable.Creator<TwitterSearch> = object : Parcelable.Creator<TwitterSearch> {
+            override fun createFromParcel(source: Parcel): TwitterSearch? = TwitterSearch(source)
+            override fun newArray(size: Int): Array<out TwitterSearch?> = arrayOfNulls(size)
+        }
     }
 
     constructor(source: Parcel) : this(
