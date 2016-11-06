@@ -99,12 +99,12 @@ class MainFragment : Fragment() {
                 EditorInfo.IME_ACTION_DONE -> {
                     if (btn_main.isEnabled) {
                         onButtonClick()
-                        true
-                    } else {
                         false
+                    } else {
+                        true
                     }
                 }
-                else -> false
+                else -> true
             }
         }
     }
