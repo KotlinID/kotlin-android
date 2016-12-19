@@ -1,7 +1,7 @@
 package com.baculsoft.kotlin.android.utils
 
 /**
- * @author Budi Oktaviyan Suryanto (budi@baculsoft.com)
+ * @author Budi Oktaviyan Suryanto (budioktaviyans@gmail.com)
  */
 interface IConstants {
 
@@ -14,7 +14,12 @@ interface IConstants {
     interface IUrls {
         companion object {
             const val BASE_URL = "http://ibacor.com/api/"
-            const val TWITTER_SEARCH = "twitter-search"
+        }
+
+        interface IApis {
+            companion object {
+                const val TWITTER_SEARCH = "twitter-search"
+            }
         }
     }
 

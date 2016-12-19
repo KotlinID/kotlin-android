@@ -15,4 +15,7 @@
     <string name="button_search">Search</string>
 
     <string name="message_search">Searching&#8230;</string>
+
+    <string name="error_failed">Failed to Get Result</string>
+    <string name="error_unknown">Unknown Error Occurred</string>
 </resources>

@@ -6,24 +6,11 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 /**
- * @author Budi Oktaviyan Suryanto (budi@baculsoft.com)
+ * @author Budi Oktaviyan Suryanto (budioktaviyans@gmail.com)
  */
 class Dates {
-
-    companion object {
-        @Volatile private var INSTANCE: Dates? = null
-
-        @Synchronized fun get(): Dates {
-            if (INSTANCE == null) {
-                INSTANCE = Dates()
-            }
-
-            return INSTANCE as Dates
-        }
-
-        private val EEEMMMddHHmmsszzzyyyy: SimpleDateFormat = SimpleDateFormat(IConstants.IPatterns.EEEMMMddHHmmsszzzyyyy, Locale.getDefault())
-        private val ddMMyyyyHHmmss: SimpleDateFormat = SimpleDateFormat(IConstants.IPatterns.ddMMyyyyHHmmss, Locale.getDefault())
-    }
+    private val EEEMMMddHHmmsszzzyyyy: SimpleDateFormat = SimpleDateFormat(IConstants.IPatterns.EEEMMMddHHmmsszzzyyyy, Locale.getDefault())
+    private val ddMMyyyyHHmmss: SimpleDateFormat = SimpleDateFormat(IConstants.IPatterns.ddMMyyyyHHmmss, Locale.getDefault())
 
     fun getDateTime(dateTime: String): Date {
         val dateFormat: DateFormat = EEEMMMddHHmmsszzzyyyy
@@ -39,7 +26,5 @@ class Dates {
         return date
     }
 
-    fun getDateTime(dateTime: Date): String {
-        return ddMMyyyyHHmmss.format(dateTime)
-    }
+    fun getDateTime(dateTime: Date): String = ddMMyyyyHHmmss.format(dateTime)
 }

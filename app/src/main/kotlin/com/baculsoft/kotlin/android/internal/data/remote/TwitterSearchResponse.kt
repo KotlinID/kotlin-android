@@ -1,34 +1,34 @@
-package com.baculsoft.kotlin.android.internal.api.response
+package com.baculsoft.kotlin.android.internal.data.remote
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
 
 /**
- * @author Budi Oktaviyan Suryanto (budi@baculsoft.com)
+ * @author Budi Oktaviyan Suryanto (budioktaviyans@gmail.com)
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 class TwitterSearchResponse {
 
     @JsonProperty(value = "statuses")
-    val statuses: List<Statuses> = arrayListOf(Statuses())
+    lateinit var statuses: List<Statuses>
 
     @JsonProperty(value = "search_metadata")
-    val searchMetadata: SearchMetadata = SearchMetadata()
+    lateinit var searchMetadata: SearchMetadata
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     class Statuses {
 
         @JsonProperty(value = "created_at")
-        val createdAt: String = ""
+        lateinit var createdAt: String
 
         @JsonProperty(value = "text")
-        val text: String = ""
+        lateinit var text: String
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     class SearchMetadata {
 
         @JsonProperty(value = "count")
-        val count: Int = 0
+        var count: Int? = 0
     }
 }

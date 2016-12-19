@@ -9,7 +9,6 @@
     <style name="AppTheme.Toolbar" parent="ThemeOverlay.AppCompat.Light">
         <item name="android:textColorPrimary">@color/colorPrimary</item>
         <item name="android:textColorSecondary">@color/colorPrimary</item>
-        <item name="android:background">@color/colorAccent</item>
     </style>
 
     <style name="AppTheme.ToolbarTitle" parent="@style/TextAppearance.Widget.AppCompat.Toolbar.Title">
@@ -17,7 +16,7 @@
     </style>
 
     <style name="AppTheme.ToolbarSubtitle" parent="@style/TextAppearance.Widget.AppCompat.Toolbar.Subtitle">
-        <item name="android:textSize">12sp</item>
+        <item name="android:textSize">14sp</item>
     </style>
 
     <style name="AppTheme.TextInputLayout" parent="TextAppearance.AppCompat">

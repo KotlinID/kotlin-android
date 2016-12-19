@@ -1,25 +1,41 @@
 buildscript {
     ext {
-        kotlinVersion = '1.0.5'
-        androidPluginVersion = '2.2.2'
-        androidSupportVersion = '25.0.1'
+        // Kotlin
+        kotlinVersion = '1.0.5-2'
+
+        // Android Support
+        androidPluginVersion = '2.2.3'
+        androidSupportVersion = '25.1.0'
         multidexVersion = '1.0.1'
+
+        // Dagger
+        daggerVersion = '2.8'
+
+        // ReactiveX
+        rxAndroidVersion = '1.2.1'
+        rxKotlinVersion = '0.60.0'
+
+        // Retrofit
         retrofitVersion = '2.1.0'
-        okHttpVersion = '3.4.2'
+        okHttpVersion = '3.5.0'
+
+        // Parceler
+        parcelerVersion = '1.1.6'
     }
     repositories {
-        mavenCentral()
         jcenter()
     }
     dependencies {
+        // Kotlin
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlinVersion}")
+
+        // Android Support
         classpath("com.android.tools.build:gradle:${androidPluginVersion}")
     }
 }
 
 allprojects {
     repositories {
-        mavenCentral()
         jcenter()
     }
 }
@@ -29,5 +45,5 @@ task clean(type: Delete) {
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '3.1'
+    gradleVersion = '3.2.1'
 }

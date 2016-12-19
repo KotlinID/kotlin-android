@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                                 xmlns:app="http://schemas.android.com/apk/res-auto"
-                                                 xmlns:tools="http://schemas.android.com/tools"
-                                                 android:layout_width="match_parent"
-                                                 android:layout_height="match_parent"
-                                                 android:background="@color/colorPrimary"
-                                                 tools:context="com.baculsoft.kotlin.android.views.activities.ResultActivity"
-                                                 tools:targetApi="LOLLIPOP">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    tools:context="com.baculsoft.kotlin.android.views.result.ResultActivity"
+    tools:targetApi="LOLLIPOP">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fitsSystemWindows="true">
+        android:layout_height="match_parent">
 
         <android.support.design.widget.AppBarLayout
             android:id="@+id/abl_result"
@@ -28,13 +27,14 @@
                 android:layout_height="wrap_content"
                 app:subtitleTextAppearance="@style/AppTheme.ToolbarSubtitle"
                 app:theme="@style/AppTheme.Toolbar"
-                app:titleTextAppearance="@style/AppTheme.ToolbarTitle"/>
+                app:titleTextAppearance="@style/AppTheme.ToolbarTitle" />
         </android.support.design.widget.AppBarLayout>
 
-        <FrameLayout
-            android:id="@+id/fl_result"
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_result"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/abl_result"/>
+            android:layout_below="@+id/abl_result"
+            android:scrollbars="vertical" />
     </RelativeLayout>
 </android.support.design.widget.CoordinatorLayout>

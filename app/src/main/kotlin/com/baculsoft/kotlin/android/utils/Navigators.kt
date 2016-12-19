@@ -1,33 +1,28 @@
 package com.baculsoft.kotlin.android.utils
 
-import android.content.Context
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import com.baculsoft.kotlin.android.internal.pojo.TwitterSearch
-import com.baculsoft.kotlin.android.views.activities.ResultActivity
+import android.util.Log
+import com.baculsoft.kotlin.android.internal.data.local.TwitterSearch
+import com.baculsoft.kotlin.android.views.result.ResultActivity
+import org.parceler.Parcels
 
 /**
- * @author Budi Oktaviyan Suryanto (budi@baculsoft.com)
+ * @author Budi Oktaviyan Suryanto (budioktaviyans@gmail.com)
  */
 class Navigators {
+    private val TAG: String = Navigators::class.java.simpleName
 
-    companion object {
-        @Volatile private var INSTANCE: Navigators? = null
-
-        @Synchronized fun get(): Navigators {
-            if (INSTANCE == null) {
-                INSTANCE = Navigators()
-            }
-
-            return INSTANCE as Navigators
+    fun openResultActivity(activity: Activity, twitterSearch: TwitterSearch) {
+        try {
+            val intent: Intent = Intent(activity, ResultActivity::class.java)
+            val bundle: Bundle = Bundle()
+            bundle.putParcelable(IConstants.IBundles.TWITTER_SEARCH, Parcels.wrap(twitterSearch))
+            intent.putExtras(bundle)
+            activity.startActivity(intent)
+        } catch (e: Exception) {
+            Log.e(TAG, e.message, e)
         }
-    }
-
-    fun openResultActivity(context: Context, twitterSearch: TwitterSearch) {
-        val intent: Intent = Intent(context, ResultActivity::class.java)
-        val bundle: Bundle = Bundle()
-        bundle.putParcelable(IConstants.IBundles.TWITTER_SEARCH, twitterSearch)
-        intent.putExtras(bundle)
-        context.startActivity(intent)
     }
 }
