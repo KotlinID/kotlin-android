@@ -65,10 +65,6 @@ class MainActivity : BaseActivity(), MainView {
         presenter.onDetach()
     }
 
-    override fun onValidate() {
-        btn_main.isEnabled = true
-    }
-
     override fun onShowProgressDialog() {
         progressDialog = commonUtils.getProgressDialog(this)
         if (!progressDialog.isShowing) {
@@ -123,7 +119,7 @@ class MainActivity : BaseActivity(), MainView {
                 val query: String = tiet_main_query.text.toString()
                 val page: String = tiet_main_page.text.toString()
 
-                presenter.validateSearch(query, page)
+                presenter.validateSearch(query, page, btn_main)
             }
         })
 
@@ -138,7 +134,7 @@ class MainActivity : BaseActivity(), MainView {
                 val query: String = tiet_main_query.text.toString()
                 val page: String = tiet_main_page.text.toString()
 
-                presenter.validateSearch(query, page)
+                presenter.validateSearch(query, page, btn_main)
             }
         })
     }
@@ -166,6 +162,7 @@ class MainActivity : BaseActivity(), MainView {
         tiet_main_page.text.clear()
         sp_main_type.setSelection(0)
         sp_main_result.setSelection(0)
+        btn_main.isEnabled = false
         keyboards.hide(cl_main, this)
         cl_main.requestFocus()
     }

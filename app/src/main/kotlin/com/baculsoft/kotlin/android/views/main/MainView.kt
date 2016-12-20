@@ -7,8 +7,6 @@ import com.baculsoft.kotlin.android.views.base.IView
  * @author Budi Oktaviyan Suryanto (budioktaviyans@gmail.com)
  */
 interface MainView : IView {
-    fun onValidate()
-
     fun onShowProgressDialog()
 
     fun onDismissProgressDialog()

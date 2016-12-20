@@ -1,6 +1,7 @@
 package com.baculsoft.kotlin.android.views.main
 
 import android.text.TextUtils
+import android.widget.Button
 import com.baculsoft.kotlin.android.extensions.safeUnsubscribe
 import com.baculsoft.kotlin.android.internal.data.local.TwitterSearch
 import com.baculsoft.kotlin.android.internal.data.local.TwitterSearchResult
@@ -33,9 +34,11 @@ class MainPresenter @Inject constructor() : IPresenter<MainView> {
         mSubscription.safeUnsubscribe()
     }
 
-    fun validateSearch(query: String, page: String) {
+    fun validateSearch(query: String, page: String, button: Button) {
         if (!TextUtils.isEmpty(query) && !TextUtils.isEmpty(page)) {
-            mView?.onValidate()
+            button.isEnabled = true
+        } else {
+            button.isEnabled = false
         }
     }
 

@@ -1,7 +1,7 @@
 buildscript {
     ext {
         // Kotlin
-        kotlinVersion = '1.0.5-2'
+        kotlinVersion = '1.0.5-3'
 
         // Android Support
         androidPluginVersion = '2.2.3'
