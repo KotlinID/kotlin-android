@@ -52,25 +52,26 @@ class MainPresenter @Inject constructor() : IPresenter<MainView> {
         mSubscription.safeUnsubscribe()
         mSubscription = api.getTwitterSearch(query, searchType, resultType, maxId, key).observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io())
                 .doOnSubscribe { mView?.onShowProgressDialog() }
-                .subscribe({
-                    val statuses: List<TwitterSearchResponse.Statuses>? = it.statuses
-
-                    if (statuses?.size != 0) {
-                        val searchMetadata: TwitterSearchResponse.SearchMetadata? = it.searchMetadata
-                        val results: List<TwitterSearchResult>? = getTwitterSearchResult(statuses)
-                        val count: Int? = searchMetadata?.count
-                        val twitterSearch: TwitterSearch = TwitterSearch(results as List<TwitterSearchResult>, count as Int)
-
-                        mView?.onNavigateView(twitterSearch)
-                    } else {
-                        mView?.onShowError()
-                    }
-
-                    mView?.onDismissProgressDialog()
-                }, { error ->
+                .doOnCompleted { mView?.onDismissProgressDialog() }
+                .subscribe({ getTwitterSearch(it) }, { error ->
                     mView?.onDismissProgressDialog()
                     mView?.onConnectionError()
                 })
+    }
+
+    private fun getTwitterSearch(response: TwitterSearchResponse) {
+        val statuses: List<TwitterSearchResponse.Statuses>? = response.statuses
+
+        if (statuses?.size != 0) {
+            val searchMetadata: TwitterSearchResponse.SearchMetadata? = response.searchMetadata
+            val results: List<TwitterSearchResult>? = getTwitterSearchResult(statuses)
+            val count: Int? = searchMetadata?.count
+            val twitterSearch: TwitterSearch = TwitterSearch(results as List<TwitterSearchResult>, count as Int)
+
+            mView?.onNavigateView(twitterSearch)
+        } else {
+            mView?.onShowError()
+        }
     }
 
     private fun getTwitterSearchResult(statuses: List<TwitterSearchResponse.Statuses>?): List<TwitterSearchResult>? {
