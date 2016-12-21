@@ -9,7 +9,6 @@ import com.baculsoft.kotlin.android.internal.data.remote.IApi
 import com.baculsoft.kotlin.android.internal.data.remote.TwitterSearchResponse
 import com.baculsoft.kotlin.android.utils.IConstants
 import com.baculsoft.kotlin.android.views.base.IPresenter
-import rx.Subscriber
 import rx.Subscription
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
@@ -50,32 +49,28 @@ class MainPresenter @Inject constructor() : IPresenter<MainView> {
             maxId = Integer.parseInt(page)
         }
 
-        mView?.onShowProgressDialog()
         mSubscription.safeUnsubscribe()
-        mSubscription = api.getTwitterSearch(query, searchType, resultType, maxId, key).observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).subscribe(object : Subscriber<TwitterSearchResponse>() {
-            override fun onCompleted() {
-                mView?.onDismissProgressDialog()
-            }
+        mSubscription = api.getTwitterSearch(query, searchType, resultType, maxId, key).observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io())
+                .doOnSubscribe { mView?.onShowProgressDialog() }
+                .subscribe({
+                    val statuses: List<TwitterSearchResponse.Statuses>? = it.statuses
 
-            override fun onError(throwable: Throwable?) {
-                mView?.onDismissProgressDialog()
-                mView?.onConnectionError()
-            }
+                    if (statuses?.size != 0) {
+                        val searchMetadata: TwitterSearchResponse.SearchMetadata? = it.searchMetadata
+                        val results: List<TwitterSearchResult>? = getTwitterSearchResult(statuses)
+                        val count: Int? = searchMetadata?.count
+                        val twitterSearch: TwitterSearch = TwitterSearch(results as List<TwitterSearchResult>, count as Int)
 
-            override fun onNext(twitterSearchResponse: TwitterSearchResponse?) {
-                val statuses: List<TwitterSearchResponse.Statuses>? = twitterSearchResponse?.statuses
-                if (statuses?.size != 0) {
-                    val searchMetadata: TwitterSearchResponse.SearchMetadata? = twitterSearchResponse?.searchMetadata
-                    val results: List<TwitterSearchResult>? = getTwitterSearchResult(statuses)
-                    val count: Int? = searchMetadata?.count
+                        mView?.onNavigateView(twitterSearch)
+                    } else {
+                        mView?.onShowError()
+                    }
 
-                    val twitterSearch: TwitterSearch = TwitterSearch(results as List<TwitterSearchResult>, count as Int)
-                    mView?.onNavigateView(twitterSearch)
-                } else {
-                    mView?.onShowError()
-                }
-            }
-        })
+                    mView?.onDismissProgressDialog()
+                }, { error ->
+                    mView?.onDismissProgressDialog()
+                    mView?.onConnectionError()
+                })
     }
 
     private fun getTwitterSearchResult(statuses: List<TwitterSearchResponse.Statuses>?): List<TwitterSearchResult>? {
